@@ -5,15 +5,15 @@
             <div class="sub-title">Timezone: Lisbon (+1)</div>
         </div>
         <div class="grid">
-            <carousel   [itemsPerSlide]="itemsPerSlide"
+            <carousel   [itemsPerSlide]="4"
                         [singleSlideOffset]="true"
                         [noWrap]="true"
                         [interval]="false"
                         [startFromIndex]="0"
                         [showIndicators]="false">
-                <slide *ngFor="let slide of slides; let index=index" class="mx-auto">
-                    <div class="day-week">{{slide.dayWeek}}</div>
-                    <div class="day-month">{{slide.month}} {{slide.day}}</div>
+                <slide *ngFor="let date of calendar; let index=index" class="mx-auto">
+                    <div class="day-week">{{date.dayWeek | uppercase}}</div>
+                    <div class="day-month">{{date.month | uppercase}} {{date.day}}</div>
                 </slide>
             </carousel>
         </div>

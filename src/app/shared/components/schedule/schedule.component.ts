@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { Calendar } from '../../models/calendar';
 
 @Component({
   selector: 'app-schedule',
@@ -6,21 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  itemsPerSlide = 4;
-  singleSlideOffset = true;
-  noWrap = true;
+  private readonly DAY = 'days';
+  private readonly FORMAT_DAY_OF_WEEK = 'ddd';
+  private readonly FORMAT_MONTH = 'MMM';
+  private readonly FORMAT_DAY = 'DD';
 
-  slides = [
-    {dayWeek: 'MON', month: 'AUG', day: '19'},
-    {dayWeek: 'TUE', month: 'AUG', day: '20'},
-    {dayWeek: 'WED', month: 'AUG', day: '21'},
-    {dayWeek: 'THU', month: 'AUG', day: '22'},
-    {dayWeek: 'FRI', month: 'SET', day: '23'}
-  ];
+  calendar = new Array<Calendar>();
   constructor() { }
 
   ngOnInit() {
+    this.generateCalendar();
   }
 
+  private generateCalendar() {
+    const date = moment();
+    while (date.year() == moment().year()) {
+      this.calendar.push({
+        dayWeek: date.format(this.FORMAT_DAY_OF_WEEK),
+        month: date.format(this.FORMAT_MONTH),
+        day: date.format(this.FORMAT_DAY)
+      });
+      date.add(1, this.DAY);
+    }
+  }
 
 }

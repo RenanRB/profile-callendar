@@ -7,11 +7,11 @@
         {{user.name}}
         </div>
         <div class="city">
-            {{user.profession}} / <span> {{user.city}} </span>
+            {{user.profession | uppercase}} <span>| {{user.city}} </span>
         </div>
         <app-stars [amountReviews]="user.reviews" [note]="user.note"></app-stars>
         <div class="price">
-            {{user.price | currency:'BRL'}} / <span>{{user.duration}} minutes</span>
+            {{user.price | currency:'BRL'}} <span>/ {{user.duration}} minutes</span>
         </div>
     </div>
 

@@ -1,17 +1,18 @@
 .image {
     float: left;
-    width: 150px;
+    width: 175px;
 }
 
 .infos {
-    margin-left: 165px;
+    margin-left: 190px;
+    color: #4c585e;
 }
 
 .name {
     width: 100%;
     float: left;
     font-size: 23px;
-    font-weight: 700;
+    font-weight: bold;
     padding-bottom: 5px;
 }
 
@@ -19,13 +20,14 @@
     width: 100%;
     float: left;
     padding-top: 15px;
+    color: #4c585e;
 }
 
 .price {
     width: 100%;
     float: left;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 19px;
+    font-weight: bold;
     margin-top: 10px;
 }
 
@@ -37,11 +39,12 @@
 .city {
     width: 100%;
     float: left;
-    font-weight: 700;
+    font-weight: bold;
     color: skyblue;
 }
 
 .city span {
     font-weight: 400;
-    color: #000;
+    color: #4c585e;
+    font-size: 16px;
 }

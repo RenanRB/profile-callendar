@@ -17,10 +17,11 @@
     -webkit-box-shadow: 0px 6px 12px 0px rgba(50, 50, 50, 0.5);
     -moz-box-shadow:    0px 6px 12px 0px rgba(50, 50, 50, 0.5);
     box-shadow:         0px 6px 12px 0px rgba(50, 50, 50, 0.5);
+    padding: 10px 0;
 }
 
 .card-schedule {
-    padding: 0px 13%;
+    padding: 10px 13%;
 }
 
 .day-week {
