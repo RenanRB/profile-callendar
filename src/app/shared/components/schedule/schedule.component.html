@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col p-0">
+        <div class="header bg-primary">
+            <div class="title">Schedule your session!</div>
+            <div class="sub-title">Timezone: Lisbon (+1)</div>
+        </div>
+        <div class="grid">
+            <carousel   [itemsPerSlide]="itemsPerSlide"
+                        [singleSlideOffset]="true"
+                        [noWrap]="true"
+                        [interval]="false"
+                        [startFromIndex]="0"
+                        [showIndicators]="false">
+                <slide *ngFor="let slide of slides; let index=index" class="mx-auto">
+                    <div class="day-week">{{slide.dayWeek}}</div>
+                    <div class="day-month">{{slide.month}} {{slide.day}}</div>
+                </slide>
+            </carousel>
+        </div>
+        <div class="grid mt-3 card-schedule">
+            <div class="row no-gutters">
+                <div class="col pt-1 px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">08:00</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col px-1">
+                    <div class="schedule">-</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">MORE</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">MORE</div>
+                </div>
+                <div class="col pt-1 px-1">
+                    <div class="schedule enabled-time">MORE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

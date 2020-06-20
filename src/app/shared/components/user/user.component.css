@@ -3,11 +3,11 @@
     width: 150px;
 }
 
-.infos{
+.infos {
     margin-left: 165px;
 }
 
-.name{
+.name {
     width: 100%;
     float: left;
     font-size: 23px;
@@ -15,13 +15,13 @@
     padding-bottom: 5px;
 }
 
-.description{
+.description {
     width: 100%;
     float: left;
     padding-top: 15px;
 }
 
-.price{
+.price {
     width: 100%;
     float: left;
     font-size: 18px;
@@ -29,19 +29,19 @@
     margin-top: 10px;
 }
 
-.price span{
+.price span {
     font-weight: 300;
     font-size: 16px;
 }
 
-.city{
+.city {
     width: 100%;
     float: left;
     font-weight: 700;
     color: skyblue;
 }
 
-.city span{
+.city span {
     font-weight: 400;
     color: #000;
 }

@@ -1,0 +1,65 @@
+.header {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.sub-title {
+    font-size: 15px;
+}
+
+.grid {
+    -webkit-box-shadow: 0px 6px 12px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow:    0px 6px 12px 0px rgba(50, 50, 50, 0.5);
+    box-shadow:         0px 6px 12px 0px rgba(50, 50, 50, 0.5);
+}
+
+.card-schedule {
+    padding: 0px 13%;
+}
+
+.day-week {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    padding-top: 5px;
+    color: #4c585e;
+}
+
+.day-month {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 5px;
+    font-weight: bold;
+    color: #4c585e;
+}
+
+.schedule {
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    color: #4c585e;
+    border-radius: 2px;
+    padding: 10px;
+}
+
+.enabled-time {
+    background-color: #e2e5ec;
+}
+
+::ng-deep .carousel-inner {
+    margin: auto;
+    width: 74%;
+}
+
+::ng-deep .carousel .carousel-control-prev-icon, ::ng-deep .carousel .carousel-control-next-icon {
+    background-color: #000;
+    background-size: 41%;
+    border-radius: 50%;
+}
