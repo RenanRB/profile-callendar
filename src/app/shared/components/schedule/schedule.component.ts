@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment-timezone';
 import { Calendar } from '../../models/calendar';
 import { ScheduleService } from 'src/app/core/schedule.service';
@@ -23,8 +23,8 @@ export class ScheduleComponent implements OnInit {
   calendar = new Array<Calendar>();
   scheduledTime: Array<any>;
   indexDayCalender: number[];
-  totalTimes = 5;
-  totalDays = 4;
+  @Input() totalTimes = 5;
+  @Input() totalDays = 4;
   
   constructor(private scheduleService: ScheduleService) { }
 
