@@ -13,6 +13,6 @@ export class ScheduleService {
   constructor(private http: HttpClient) { }
 
   getDay(id: number): Observable<any> {
-    return this.http.get<any>(`${url}?id=${id}`).pipe(map(item => item.length ? item[0] : null));
+    return this.http.get<any>(`${url}?id=${id}`).pipe(map(item => item.length ? item.shift() : null));
   }
 }

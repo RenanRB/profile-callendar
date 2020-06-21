@@ -44,7 +44,8 @@ export class ScheduleComponent implements OnInit {
       forkJoin(fork).subscribe(results => {
         results.forEach((result: any) => {
           if (result) {
-            this.calendar.filter((calendar: Calendar) => calendar.id == result.id).map(calendar => calendar.scheduledTime = result.times);
+            this.calendar.filter((calendar: Calendar) => calendar.id == result.id)
+                         .map(calendar => calendar.scheduledTime = result.times);
           }
         });
         this.refreshList();
@@ -68,12 +69,26 @@ export class ScheduleComponent implements OnInit {
   private refreshList(): void {
     this.scheduledTime.map(st => st.position = this.generateEnabled())
     this.indexes.forEach((value, index) => {
+      if (this.calendar[value].id == this.dateWithSpecificTime().valueOf()) {
+        this.disablePastHours(value);
+      }
       if (this.calendar[value].scheduledTime) {
         this.calendar[value].scheduledTime.forEach(time => {
-          this.scheduledTime.filter(schedule => schedule.time == time).forEach(result => result.position[index] = false);
+          this.scheduledTime.filter(schedule => schedule.time == time)
+                            .forEach(result => result.position[index] = false);
         });
       }
     });
+  }
+
+  private disablePastHours(index: number): void {
+    const times = this.generateTime().map(item => item.time);
+    this.calendar[index].scheduledTime = this.calendar[index].scheduledTime.concat(times.filter(time => this.isDateGreaterThan(time)));
+  }
+
+  private isDateGreaterThan(time: string): boolean {
+    const currentDate = moment();
+    return currentDate.diff(moment(`${currentDate.format('YYYY-MM-DD')} ${time}`)) >= 0;
   }
 
   private getTimezoneName(): string {
@@ -94,7 +109,7 @@ export class ScheduleComponent implements OnInit {
       });
       date.add(1, this.DAY);
     }
-    this.generateTime();
+    this.scheduledTime = this.generateTime();
   }
 
   private dateWithSpecificTime(hour = 0, minute = 0, second = 0, millisecond = 0): moment.Moment {
@@ -103,7 +118,7 @@ export class ScheduleComponent implements OnInit {
     return date;
   }
 
-  private generateTime(): void {
+  private generateTime(): Array<any> {
     const scheduledTime = new Array();
     let date = this.dateWithSpecificTime(8);
     const enabled = this.generateEnabled();
@@ -111,7 +126,7 @@ export class ScheduleComponent implements OnInit {
       scheduledTime.push({time: date.format(this.FORMAT_HOUR_MINUTE), position: enabled});
       date.add(30, this.MINUTES);
     }
-    this.scheduledTime = scheduledTime;
+    return scheduledTime;
   }
 
   private generateEnabled(): Array<boolean> {
