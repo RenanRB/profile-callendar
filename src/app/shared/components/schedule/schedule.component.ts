@@ -3,6 +3,7 @@ import * as moment from 'moment-timezone';
 import { Calendar } from '../../models/calendar';
 import { ScheduleService } from 'src/app/core/schedule.service';
 import { forkJoin } from 'rxjs';
+import { TimesOfDay } from '../../models/timesOfDay';
 
 @Component({
   selector: 'app-schedule',
@@ -21,28 +22,28 @@ export class ScheduleComponent implements OnInit {
   timezoneName: string;
   calendar = new Array<Calendar>();
   scheduledTime: Array<any>;
-  indexes: number[];
+  indexDayCalender: number[];
   totalTimes = 5;
   totalDays = 4;
   
-  constructor(private schedule: ScheduleService) { }
+  constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit(): void {
     this.timezoneName = this.getTimezoneName();
     this.generateCalendar();
   }
 
-  onSlideRangeChange(indexes: number[]): void {
-    this.indexes = indexes;
+  onSlideRangeChange(indexDayCalender: number[]): void {
+    this.indexDayCalender = indexDayCalender;
     let fork = [];
-    indexes.forEach(index => {
+    indexDayCalender.forEach(index => {
       if (!this.calendar[index].scheduledTime) {
-        fork.push(this.schedule.getDay(this.calendar[index].id));
+        fork.push(this.scheduleService.getDay(this.calendar[index].id));
       }
     });
     if (fork.length) {
-      forkJoin(fork).subscribe(results => {
-        results.forEach((result: any) => {
+      forkJoin(fork).subscribe((results: Array<TimesOfDay>) => {
+        results.forEach((result: TimesOfDay) => {
           if (result) {
             this.calendar.filter((calendar: Calendar) => calendar.id == result.id)
                          .map(calendar => calendar.scheduledTime = result.times);
@@ -66,10 +67,40 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
+  markTime(indexScheduledTime: number, positionDay: number): void {
+    const positionCalendar = this.indexDayCalender[positionDay];
+    const schedule = this.scheduledTime[indexScheduledTime].time;
+    this.calendar[positionCalendar].scheduledTime
+      .find(item => item == schedule) 
+      ? this.removeItem(positionCalendar, schedule) 
+      : this.addItem(positionCalendar, schedule);
+  }
+
+  private removeItem(positionCalendar:number, item: string): void {
+    const day = this.calendar[positionCalendar];
+    if (this.isToday(positionCalendar) && !this.isDateGreaterThan(item)) {
+      return;
+    }
+    day.scheduledTime.splice(day.scheduledTime.indexOf(item), 1);
+    this.saveList(day);
+  }
+
+  private addItem(positionCalendar:number, item: string): void {
+    const day = this.calendar[positionCalendar];
+    day.scheduledTime.push(item);
+    this.saveList(day);
+  }
+
+  private saveList(day: Calendar): void {
+    const tod:TimesOfDay = {id: day.id, times: day.scheduledTime};
+    this.scheduleService.postDay(tod).subscribe();
+    this.refreshList();
+  }
+
   private refreshList(): void {
     this.scheduledTime.map(st => st.position = this.generateEnabled())
-    this.indexes.forEach((value, index) => {
-      if (this.calendar[value].id == this.dateWithSpecificTime().valueOf()) {
+    this.indexDayCalender.forEach((value, index) => {
+      if (this.isToday(value)) {
         this.disablePastHours(value);
       }
       if (this.calendar[value].scheduledTime) {
@@ -79,6 +110,10 @@ export class ScheduleComponent implements OnInit {
         });
       }
     });
+  }
+
+  private isToday(indexCalendar: number): boolean {
+    return this.calendar[indexCalendar].id == this.dateWithSpecificTime().valueOf();
   }
 
   private disablePastHours(index: number): void {

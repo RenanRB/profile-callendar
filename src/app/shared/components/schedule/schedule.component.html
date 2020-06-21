@@ -20,7 +20,9 @@
         </div>
         <div class="grid mt-3 card-schedule">
             <div class="row no-gutters" *ngFor="let hour of counter(totalTimes); let i = index">
-                <div class="col pt-1 px-1" *ngFor="let in of counter(totalDays); let x = index">
+                <div class="col pt-1 px-1" 
+                     *ngFor="let in of counter(totalDays); let x = index"
+                     (click)="markTime(i, x);">
                     <div class="schedule" [class.enabled-time]="scheduledTime[i].position[x]">{{scheduledTime[i].position[x] ? scheduledTime[i].time : '-'}}</div>
                 </div>
             </div>
