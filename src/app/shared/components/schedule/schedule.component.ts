@@ -25,7 +25,7 @@ export class ScheduleComponent implements OnInit {
   indexDayCalender: number[];
   @Input() totalTimes = 5;
   @Input() totalDays = 4;
-  
+
   constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class ScheduleComponent implements OnInit {
 
   onSlideRangeChange(indexDayCalender: number[]): void {
     this.indexDayCalender = indexDayCalender;
-    let fork = [];
+    const fork = [];
     indexDayCalender.forEach(index => {
       if (!this.calendar[index].scheduledTime) {
         fork.push(this.scheduleService.getDay(this.calendar[index].id));
@@ -45,8 +45,8 @@ export class ScheduleComponent implements OnInit {
       forkJoin(fork).subscribe((results: Array<TimesOfDay>) => {
         results.forEach((result: TimesOfDay) => {
           if (result) {
-            this.calendar.filter((calendar: Calendar) => calendar.id == result.id)
-                         .map(calendar => calendar.scheduledTime = result.times);
+            this.calendar.filter((calendar: Calendar) => calendar.id === result.id)
+                        .map(calendar => calendar.scheduledTime = result.times);
             return;
           }
         });
@@ -74,16 +74,16 @@ export class ScheduleComponent implements OnInit {
     if (!this.calendar[positionCalendar].scheduledTime) {
       this.calendar[positionCalendar].scheduledTime = [];
     }
-    if (this.isToday(positionCalendar)) { 
+    if (this.isToday(positionCalendar)) {
       this.ignoreDatePast(positionCalendar);
     }
     this.calendar[positionCalendar].scheduledTime
-      .find(item => item == schedule) 
-      ? this.removeItem(positionCalendar, schedule) 
+      .find(item => item === schedule)
+      ? this.removeItem(positionCalendar, schedule)
       : this.addItem(positionCalendar, schedule);
   }
 
-  private removeItem(positionCalendar:number, item: string): void {
+  private removeItem(positionCalendar: number, item: string): void {
     if (this.isToday(positionCalendar) && this.isDateGreaterThan(item)) {
       return;
     }
@@ -92,37 +92,37 @@ export class ScheduleComponent implements OnInit {
     this.saveList(day);
   }
 
-  private addItem(positionCalendar:number, item: string): void {
+  private addItem(positionCalendar: number, item: string): void {
     const day = this.calendar[positionCalendar];
     day.scheduledTime.push(item);
     this.saveList(day);
   }
 
   private saveList(day: Calendar): void {
-    const tod:TimesOfDay = {id: day.id, times: day.scheduledTime};
+    const tod: TimesOfDay = {id: day.id, times: day.scheduledTime};
     this.scheduleService.getDay(tod.id)
-      .subscribe(item => item 
-        ? this.scheduleService.putDay(tod).subscribe() 
+      .subscribe(item => item
+        ? this.scheduleService.putDay(tod).subscribe()
         : this.scheduleService.postDay(tod).subscribe());
     this.refreshList();
   }
 
   private ignoreDatePast(positionCalendar: number): void {
     const pastHours = this.getPastHours();
-    this.calendar[positionCalendar].scheduledTime = this.calendar[positionCalendar].scheduledTime.filter( function( el ) {
-      return !pastHours.includes( el );
+    this.calendar[positionCalendar].scheduledTime = this.calendar[positionCalendar].scheduledTime.filter((time) => {
+      return !pastHours.includes(time);
     });
   }
 
   private refreshList(): void {
-    this.scheduledTime.map(st => st.position = this.generateEnabled())
+    this.scheduledTime.map(st => st.position = this.generateEnabled());
     this.indexDayCalender.forEach((value, index) => {
       if (this.isToday(value)) {
         this.disablePastHours(value);
       }
       if (this.calendar[value].scheduledTime) {
         this.calendar[value].scheduledTime.forEach(time => {
-          this.scheduledTime.filter(schedule => schedule.time == time)
+          this.scheduledTime.filter(schedule => schedule.time === time)
                             .forEach(result => result.position[index] = false);
         });
       }
@@ -130,7 +130,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   private isToday(indexCalendar: number): boolean {
-    return this.calendar[indexCalendar].id == this.dateWithSpecificTime().valueOf();
+    return this.calendar[indexCalendar].id === this.dateWithSpecificTime().valueOf();
   }
 
   private disablePastHours(index: number): void {
@@ -159,7 +159,7 @@ export class ScheduleComponent implements OnInit {
 
   private generateCalendar(): void {
     const date = this.dateWithSpecificTime();
-    while (date.year() == moment().year()) {
+    while (date.year() === moment().year()) {
       this.calendar.push({
         id: date.valueOf(),
         dayWeek: date.format(this.FORMAT_DAY_OF_WEEK),
@@ -173,13 +173,13 @@ export class ScheduleComponent implements OnInit {
 
   private dateWithSpecificTime(hour = 0, minute = 0, second = 0, millisecond = 0): moment.Moment {
     const date = moment();
-    date.set({hour,minute,second,millisecond});
+    date.set({hour, minute, second, millisecond});
     return date;
   }
 
   private generateTime(): Array<any> {
     const scheduledTime = new Array();
-    let date = this.dateWithSpecificTime(8);
+    const date = this.dateWithSpecificTime(8);
     const enabled = this.generateEnabled();
     while (date.hours() <= 17 ) {
       scheduledTime.push({time: date.format(this.FORMAT_HOUR_MINUTE), position: enabled});
@@ -189,7 +189,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   private generateEnabled(): Array<boolean> {
-    return new Array(this.totalDays).fill(undefined).map(i => true)
+    return new Array(this.totalDays).fill(undefined).map(i => true);
   }
 
 }

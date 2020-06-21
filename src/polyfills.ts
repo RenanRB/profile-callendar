@@ -17,10 +17,13 @@
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
-/** IE10 and IE11 requires the following for NgClass support on SVG elements */
-// import 'classlist.js';  // Run `npm install --save classlist.js`.
-/** Evergreen browsers require these. **/
+/**
+ * IE10 and IE11 requires the following for NgClass support on SVG elements
+ * import 'classlist.js';  // Run `npm install --save classlist.js`.
+ * Evergreen browsers require these.
+ */
 import 'core-js/es/reflect';
+
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.

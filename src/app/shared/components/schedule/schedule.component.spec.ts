@@ -36,7 +36,7 @@ describe('ScheduleComponent', () => {
     const value = getElement('#c1l1 div').innerText;
     getElement('#c1l1').click();
     fixture.detectChanges();
-    expect(getElement('#c1l1 div').innerText).toEqual(value == '-' ? '08:30': '-');
+    expect(getElement('#c1l1 div').innerText).toEqual(value === '-' ? '08:30' : '-');
   }
 
   function getElement(element: string): HTMLDivElement {

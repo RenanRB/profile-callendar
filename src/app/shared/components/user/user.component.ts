@@ -10,9 +10,7 @@ import { UserService } from 'src/app/core/user.service';
 export class UserComponent implements OnInit {
 
   user: User;
-  
   @Input() userId: number;
-
 
   constructor(private userService: UserService) { }
 
