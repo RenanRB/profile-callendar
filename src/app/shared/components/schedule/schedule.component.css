@@ -48,6 +48,11 @@
     color: #4c585e;
     border-radius: 2px;
     padding: 10px;
+    cursor: pointer;
+}
+
+.more {
+    font-size: 11px;
 }
 
 .enabled-time {

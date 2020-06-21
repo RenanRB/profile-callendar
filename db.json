@@ -11,6 +11,44 @@
             "price": 169.90,
             "duration": 50,
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad inventore dolores laborum officia praesentium iste temporibus amet molestiae. Repudiandae, nulla. Porro nam sint exercitationem qui quibusdam officiis dolore possimus voluptatibus!"
+        },
+        {
+            "id": 2,
+            "name": "Renan Rafael Bertoldo",
+            "picture": "https://scontent.fjoi5-1.fna.fbcdn.net/v/t1.0-1/p200x200/49947036_2332183716793988_9010719074929344512_o.jpg?_nc_cat=102&_nc_sid=7206a8&_nc_ohc=L4EDUgsAPWkAX9pak7L&_nc_ht=scontent.fjoi5-1.fna&_nc_tp=6&oh=81840d9169db7795d11ac064f625963c&oe=5F111630",
+            "profession": "Developer",
+            "city": "Florianópolis",
+            "note": 4,
+            "reviews": 5,
+            "price": 169.90,
+            "duration": 50,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad inventore dolores laborum officia praesentium iste temporibus amet molestiae. Repudiandae, nulla. Porro nam sint exercitationem qui quibusdam officiis dolore possimus voluptatibus!"
+        }
+    ],
+    "schedule": [
+        {
+            "id": 1592622000000,
+            "times": [
+                "08:00", "10:00"
+            ]
+        },
+        {
+            "id": 1592708400000,
+            "times": [
+                "09:00", "15:30"
+            ]
+        },
+        {
+            "id": 1592794800000,
+            "times": [
+                "09:00", "15:30"
+            ]
+        },
+        {
+            "id": 1592881200000,
+            "times": [
+                "09:00", "15:30"
+            ]
         }
     ]
 }

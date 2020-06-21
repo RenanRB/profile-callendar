@@ -2,15 +2,16 @@
     <div class="col p-0">
         <div class="header bg-primary">
             <div class="title">Schedule your session!</div>
-            <div class="sub-title">Timezone: Lisbon (+1)</div>
+            <div class="sub-title">Timezone: {{timezoneName}}</div>
         </div>
         <div class="grid">
-            <carousel   [itemsPerSlide]="4"
+            <carousel   [itemsPerSlide]="totalDays"
                         [singleSlideOffset]="true"
-                        [noWrap]="true"
+                        [noWrap]="false"
                         [interval]="false"
                         [startFromIndex]="0"
-                        [showIndicators]="false">
+                        [showIndicators]="false"
+                        (slideRangeChange)="onSlideRangeChange($event)">
                 <slide *ngFor="let date of calendar; let index=index" class="mx-auto">
                     <div class="day-week">{{date.dayWeek | uppercase}}</div>
                     <div class="day-month">{{date.month | uppercase}} {{date.day}}</div>
@@ -18,88 +19,14 @@
             </carousel>
         </div>
         <div class="grid mt-3 card-schedule">
-            <div class="row no-gutters">
-                <div class="col pt-1 px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
+            <div class="row no-gutters" *ngFor="let hour of counter(totalTimes); let i = index">
+                <div class="col pt-1 px-1" *ngFor="let in of counter(totalDays); let x = index">
+                    <div class="schedule" [class.enabled-time]="scheduledTime[i].position[x]">{{scheduledTime[i].position[x] ? scheduledTime[i].time : '-'}}</div>
                 </div>
             </div>
-            <div class="row no-gutters">
-                <div class="col px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-            </div>
-            <div class="row no-gutters">
-                <div class="col px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-            </div>
-            <div class="row no-gutters">
-                <div class="col px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-            </div>
-            <div class="row no-gutters">
-                <div class="col px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">08:00</div>
-                </div>
-            </div>
-            <div class="row no-gutters">
-                <div class="col px-1">
-                    <div class="schedule">-</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">MORE</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">MORE</div>
-                </div>
-                <div class="col pt-1 px-1">
-                    <div class="schedule enabled-time">MORE</div>
+            <div class="row no-gutters" *ngIf="totalTimes < scheduledTime.length">
+                <div class="col pt-1 px-1" *ngFor="let in of counter(totalDays);" (click)="moreResults();">
+                    <div class="schedule enabled-time more">MORE</div>
                 </div>
             </div>
         </div>
