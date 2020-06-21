@@ -18,6 +18,10 @@ export class ScheduleService {
   }
 
   postDay(tod: TimesOfDay): Observable<TimesOfDay> {
+    return this.http.post<TimesOfDay>(url, tod);
+  }
+
+  putDay(tod: TimesOfDay): Observable<TimesOfDay> {
     return this.http.put<TimesOfDay>(url + tod.id, tod);
   }
 }

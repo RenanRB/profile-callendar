@@ -47,6 +47,7 @@ export class ScheduleComponent implements OnInit {
           if (result) {
             this.calendar.filter((calendar: Calendar) => calendar.id == result.id)
                          .map(calendar => calendar.scheduledTime = result.times);
+            return;
           }
         });
         this.refreshList();
@@ -70,6 +71,12 @@ export class ScheduleComponent implements OnInit {
   markTime(indexScheduledTime: number, positionDay: number): void {
     const positionCalendar = this.indexDayCalender[positionDay];
     const schedule = this.scheduledTime[indexScheduledTime].time;
+    if (!this.calendar[positionCalendar].scheduledTime) {
+      this.calendar[positionCalendar].scheduledTime = [];
+    }
+    if (this.isToday(positionCalendar)) { 
+      this.ignoreDatePast(positionCalendar);
+    }
     this.calendar[positionCalendar].scheduledTime
       .find(item => item == schedule) 
       ? this.removeItem(positionCalendar, schedule) 
@@ -77,10 +84,10 @@ export class ScheduleComponent implements OnInit {
   }
 
   private removeItem(positionCalendar:number, item: string): void {
-    const day = this.calendar[positionCalendar];
-    if (this.isToday(positionCalendar) && !this.isDateGreaterThan(item)) {
+    if (this.isToday(positionCalendar) && this.isDateGreaterThan(item)) {
       return;
     }
+    const day = this.calendar[positionCalendar];
     day.scheduledTime.splice(day.scheduledTime.indexOf(item), 1);
     this.saveList(day);
   }
@@ -93,8 +100,18 @@ export class ScheduleComponent implements OnInit {
 
   private saveList(day: Calendar): void {
     const tod:TimesOfDay = {id: day.id, times: day.scheduledTime};
-    this.scheduleService.postDay(tod).subscribe();
+    this.scheduleService.getDay(tod.id)
+      .subscribe(item => item 
+        ? this.scheduleService.putDay(tod).subscribe() 
+        : this.scheduleService.postDay(tod).subscribe());
     this.refreshList();
+  }
+
+  private ignoreDatePast(positionCalendar: number): void {
+    const pastHours = this.getPastHours();
+    this.calendar[positionCalendar].scheduledTime = this.calendar[positionCalendar].scheduledTime.filter( function( el ) {
+      return !pastHours.includes( el );
+    });
   }
 
   private refreshList(): void {
@@ -117,8 +134,15 @@ export class ScheduleComponent implements OnInit {
   }
 
   private disablePastHours(index: number): void {
+    if (!this.calendar[index].scheduledTime) {
+      this.calendar[index].scheduledTime = [];
+    }
+    this.calendar[index].scheduledTime = this.calendar[index].scheduledTime.concat(this.getPastHours());
+  }
+
+  private getPastHours(): Array<string> {
     const times = this.generateTime().map(item => item.time);
-    this.calendar[index].scheduledTime = this.calendar[index].scheduledTime.concat(times.filter(time => this.isDateGreaterThan(time)));
+    return times.filter(time => this.isDateGreaterThan(time));
   }
 
   private isDateGreaterThan(time: string): boolean {
